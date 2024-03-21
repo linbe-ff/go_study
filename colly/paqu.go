@@ -1,4 +1,4 @@
-package main
+package colly
 
 import (
 	"fmt"
@@ -72,10 +72,4 @@ func ResultsConsumer() {
 		}
 		fmt.Println("Fetched:", url)
 	}
-}
-
-func main() {
-	go GenerateUrlProducer("http://example.com")
-	go GenerateWorkers()
-	ResultsConsumer()
 }

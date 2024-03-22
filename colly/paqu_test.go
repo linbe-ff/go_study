@@ -11,12 +11,6 @@ import (
 	"time"
 )
 
-func TestPaqu(t *testing.T) {
-	go GenerateUrlProducer("http://example.com")
-	go GenerateWorkers()
-	ResultsConsumer()
-}
-
 func TestPaqu2(t *testing.T) {
 	testCollyDouban()
 }
@@ -38,7 +32,7 @@ func TestTime(t *testing.T) {
 }
 
 func TestCreateFile(t *testing.T) {
-	resp, err := http.Get("https://img.dpm.org.cn/Uploads/Picture/2024/02/28/s65de7fdbd64e0.jpg")
+	resp, err := http.Get("https://img.***.org.cn/Uploads/Picture/2024/02/28/s65de7fdbd64e0.jpg")
 	if err != nil {
 		log.Println("Error fetching image:", err)
 		return

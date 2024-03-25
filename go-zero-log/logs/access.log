@@ -1,0 +1,2 @@
+{"@timestamp":"2024-03-22T15:46:00.525+08:00","caller":"go-zero-log/log.go:18","content":"hello world","level":"info"}
+{"@timestamp":"2024-03-22T15:46:00.965+08:00","caller":"go-zero-log/log.go:18","content":"hello world","level":"info"}

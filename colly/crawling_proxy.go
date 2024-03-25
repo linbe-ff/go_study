@@ -25,7 +25,7 @@ func proxyAllPageInfo() {
 		FairTime     int
 	)
 	baseInfo := Init("a=51krykFTJ7qI2tOlUmVbedSVcZw7h04c; _popprepop=1; zone-cap-3576187=1%3B1711166608; token_QpUJAAAAAAAAGu98Hdz1l_lcSZ2rY60Ajjk9U1c=BQPyAAAAAAAACZUAApG6kSTWc7nWCL1mRgpNrrpwkRwqeKbvFUYUxMJzzG6MticixdK-mNKN8oI3e4qbBcpXk25D5hX3TUsfV7zgEfcC3bVFvsJw6GvzhX-J8tY7GKL5lT4TQEUUNGzj6f0pAHmySNM3HV9qxfWv4uM6Uu8fZ4k4G2C9_Uy50gKWc-_R6X1_9pHd0P-QW9UbqtA4pGGzoav7iSfkQs7ChcGJ9GMJzZeCBduWzyl7hzLB0q0N0zTesiJLGU6wni3ZaVuatQB_HgBsOyo6ERmr42tdyDXs5rgclW85j1NxcvSxrlctJFpUUZx4ZnUZcQw3xVeNuAZntINdnt1b8pWbw1M6A9F3ruEqpNimATWfopLWDCp5RdaCmva6McAh22wBjBiQ6GjWoBvKJhYg5KXXqpb2ojBkSDo3Y37buZZzm6LFlmQmSLRK4enMuymD-0Z17xRQYeMJdFBJ9XnGlyq2SXuURLa2KgxrVyW165SrYByEuVgPRoYH-RNkNWqFnZ7PGUyW2bYUWOU8L4BVITCq1ADBqMGslh2v-yHx2LKXN58R7sahUqpRae6LaMH39bY8tQabsOCwnwiiYl1cXjWwtVSRdaYKTS7a1GcDonqLAn2DjpdqATNSJYTvoXlFR_H1S0XyPR86S14Hen3pRvPFgb_0oG2sSlogeALEYH94wMYIqWgwAUEDw5lUL4XU6O94NVwckkUZ_6Q0oXWJkhs4uFofJRm23PKLcBa0k6i05y2VuFKNQljg7hzJe28bQ9FqyWKdP8ZTeFHqlpv_-uwSYwyCstIJxWspJRzKpuYViOeFVPYD6naF3mz2_eeFSF-lfHkfeJKckh62yK4pdhFs72OBiPkw4YgKSZKnXI8jAP-5Z4UMI1qDc0BPgghRcUEd9cPRQV1WrJ0gkMHfE3epGozgt3iDMot33pSHYf4rGpeK-soxI-rZ90znNyj2nOg7L74QMj-FrFCSad7V0x2aScg013jSQH7Z3ymWTCpK0Haam5N3S2A1qe8LlPqK4x5xyyoR6LXycszhBjxb2vad5aFzeRnxuxvBy5EC-AuNTUSlR-7QIqFQytHUg9nHIyp_MI5xsvPimrrgyYqi1VJANpuBk3me5JFSg_D4nMo9axhnOewU073de1SL_EU3KFDjkhXmQAjAjdCI5T0ayeC9TVMkOJ9IEAtbC7IIJhVR3BThe55y_9vrPaX3Lo5pHQkMGik5YfUqCPEV-Tk_m2jCa-tF-k_yaK_3fWBGchLFzGDotuYOML8YAq-AQ6gFQMP-9H7VAyPG6u4QHaXiTZX2Y56DBhC7vYvZfT_q6-cwf6zQrB-9U1oLiUDfuHxrwLdcb8yFcw",
-		"https://everia.club/page/",
+		"https://***.***/page/",
 		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0",
 	)
 	preUrl := baseInfo.Url
@@ -53,7 +53,6 @@ func (l *BaseInfo) proxyGetPageOne(pageInfoList *PageInfoList, page int) (_err e
 	c := colly.NewCollector(
 		colly.Async(false),
 		colly.UserAgent(l.userAgent),
-		//colly.AllowedDomains("https://everia.club"),
 	)
 	//c.SetRequestTimeout(10 * time.Second)
 	c.SetCookies(l.Url, []*http.Cookie{l.InitCookie()})

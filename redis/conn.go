@@ -26,7 +26,7 @@ func (r *Redis) Conn() {
 	r.rdb = redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379", // Redis服务器地址
 		Password: "",               // 密码，没有则留空
-		DB:       0,                // 使用默认DB
+		DB:       2,                // 使用默认DB
 	})
 	r.ctx = context.TODO()
 }
@@ -148,20 +148,20 @@ func (r *Redis) ReleaseLock(lockKey string, lockValue interface{}) error {
 	return nil
 }
 
-func (r *Redis) CreateQueue(userId int, total int64) {
+func (r *Redis) CreateQueue() {
 	var wg sync.WaitGroup
 	var lock sync.Mutex
 	var listName = "seckill"
+	var total int64 = 20
 
-	//userIDs := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
-	//count := len(userIDs)
+	userIDs := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
+	count := len(userIDs)
 	ch := make(chan int, count)
 
 	f := func(id int) {
 		defer wg.Done()
 		lock.Lock()
 		defer lock.Unlock()
-
 		lLen, _ := r.rdb.LLen(r.ctx, listName).Result()
 		if lLen < total {
 			r.rdb.RPush(r.ctx, listName, fmt.Sprintf("%d@%v", id, time.Now()))
@@ -182,4 +182,8 @@ func (r *Redis) CreateQueue(userId int, total int64) {
 	}
 	close(ch)
 	wg.Wait()
+}
+
+func (r *Redis) SecKill() {
+
 }

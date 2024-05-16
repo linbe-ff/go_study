@@ -301,3 +301,27 @@ func TestRedis(t *testing.T) {
 		}
 	}
 }
+
+func TestChan(t *testing.T) {
+	var (
+		ch = make(chan int, 2)
+	)
+	go func() {
+		for {
+			select {
+			case n := <-ch:
+				time.Sleep(time.Second)
+				fmt.Println(n)
+			}
+		}
+	}()
+	for i := 1; i < 11; i++ {
+		select {
+		case ch <- i:
+		default:
+			fmt.Println("丢弃请求")
+			time.Sleep(time.Second)
+		}
+	}
+	time.Sleep(10 * time.Second)
+}

@@ -325,3 +325,26 @@ func TestChan(t *testing.T) {
 	}
 	time.Sleep(10 * time.Second)
 }
+
+func TestEEE(t *testing.T) {
+	old := []string{"a", "b", "c"}
+	new1 := []string{"a", "d", "e", "c"}
+	result := make([]string, 0)
+
+	oldMap := make(map[string]bool)
+	for _, v := range old {
+		oldMap[v] = true
+	}
+
+	// 去掉old中 new没有的元素
+	for _, v := range new1 {
+		if oldMap[v] {
+			result = append(result, v)
+		}
+	}
+
+	// 创建一个新的切片，仅包含old中也存在于new1中的元素
+
+	fmt.Println(result)
+
+}

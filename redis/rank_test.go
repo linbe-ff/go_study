@@ -20,7 +20,7 @@ func TestSort(t *testing.T) {
 	r.ZDel("java")
 
 	//tuples, err := r.rdb.ZRangeWithScores(r.ctx, "ranking", 0, -1).Result() // 正序
-	tuples, err := r.rdb.ZRevRangeWithScores(r.ctx, "ranking", 0, -1).Result() // 倒序
+	tuples, err := r.Rdb.ZRevRangeWithScores(r.Ctx, "ranking", 0, -1).Result() // 倒序
 
 	if err != nil {
 		panic(err)

@@ -32,16 +32,16 @@ func TestSecKill(t *testing.T) {
 			select {
 			case userId := <-ch:
 				// 假设`uniqueUsers`是存储已抢购用户ID的集合键
-				userAlreadyPurchased, _ := r.rdb.SIsMember(r.ctx, "uniqueUsers", userId).Result()
+				userAlreadyPurchased, _ := r.Rdb.SIsMember(r.Ctx, "uniqueUsers", userId).Result()
 
 				if !userAlreadyPurchased {
-					lLen, _ = r.rdb.LLen(r.ctx, listName).Result()
+					lLen, _ = r.Rdb.LLen(r.Ctx, listName).Result()
 					if lLen < stockCount {
 						tmpStr := fmt.Sprintf("%d@%v", userId, time.Now())
-						r.rdb.RPush(r.ctx, listName, tmpStr)
+						r.Rdb.RPush(r.Ctx, listName, tmpStr)
 						fmt.Println("抢购成功", tmpStr)
 						// 添加用户ID到集合
-						r.rdb.SAdd(r.ctx, "uniqueUsers", userId)
+						r.Rdb.SAdd(r.Ctx, "uniqueUsers", userId)
 					} else {
 						fmt.Println("抢购结束")
 					}
@@ -54,13 +54,13 @@ func TestSecKill(t *testing.T) {
 
 	// 模拟请求打进来
 	for _, userId := range userIds {
-		exists, _ := r.rdb.Exists(r.ctx, listName+":"+strconv.Itoa(userId)).Result()
+		exists, _ := r.Rdb.Exists(r.Ctx, listName+":"+strconv.Itoa(userId)).Result()
 		if exists > 0 {
 			time.Sleep(200 * time.Millisecond)
 			fmt.Println("请求频繁")
 			continue
 		}
-		r.rdb.Set(r.ctx, listName+strconv.Itoa(userId), "", exprireTime)
+		r.Rdb.Set(r.Ctx, listName+strconv.Itoa(userId), "", exprireTime)
 		ch <- userId
 	}
 	time.Sleep(30 * time.Second)
@@ -76,7 +76,7 @@ func TestSecKill2(t *testing.T) {
 		r.Close()
 	}()
 
-	r.rdb.Set(r.ctx, listName+":"+"stock", 1000, 0)
+	r.Rdb.Set(r.Ctx, listName+":"+"stock", 1000, 0)
 
 	for i := 0; i < 100000; i++ {
 		userIds = append(userIds, i+10)
@@ -87,10 +87,10 @@ func TestSecKill2(t *testing.T) {
 			select {
 			case userId := <-ch:
 				// 假设`uniqueUsers`是存储已抢购用户ID的集合键
-				userAlreadyPurchased, _ := r.rdb.SIsMember(r.ctx, "uniqueUsers", userId).Result()
+				userAlreadyPurchased, _ := r.Rdb.SIsMember(r.Ctx, "uniqueUsers", userId).Result()
 				if !userAlreadyPurchased {
 					//lLen, _ = r.rdb.LLen(r.ctx, listName).Result()
-					result, _ := r.rdb.Get(r.ctx, listName+":"+"stock").Result()
+					result, _ := r.Rdb.Get(r.Ctx, listName+":"+"stock").Result()
 
 					atoi, _ := strconv.Atoi(result)
 					if atoi == 0 {
@@ -98,12 +98,12 @@ func TestSecKill2(t *testing.T) {
 						return
 					}
 					if atoi > 0 {
-						r.rdb.DecrBy(r.ctx, listName+":"+"stock", 1).Result()
+						r.Rdb.DecrBy(r.Ctx, listName+":"+"stock", 1).Result()
 						tmpStr := fmt.Sprintf("%d@%v", userId, time.Now())
-						r.rdb.RPush(r.ctx, listName, tmpStr)
+						r.Rdb.RPush(r.Ctx, listName, tmpStr)
 						//fmt.Println("抢购成功", tmpStr)
 						// 添加用户ID到集合
-						r.rdb.SAdd(r.ctx, "uniqueUsers", userId)
+						r.Rdb.SAdd(r.Ctx, "uniqueUsers", userId)
 					} else {
 						//fmt.Println("抢购结束")
 					}
@@ -117,7 +117,7 @@ func TestSecKill2(t *testing.T) {
 	// 模拟请求打进来
 	go func() {
 		for _, userId := range userIds {
-			exists, _ := r.rdb.Exists(r.ctx, listName+":"+strconv.Itoa(userId)).Result()
+			exists, _ := r.Rdb.Exists(r.Ctx, listName+":"+strconv.Itoa(userId)).Result()
 			if exists > 0 {
 				//time.Sleep(200 * time.Millisecond)
 				fmt.Println("请求频繁")
@@ -125,7 +125,7 @@ func TestSecKill2(t *testing.T) {
 			}
 			select {
 			case ch <- userId:
-				r.rdb.Set(r.ctx, listName+strconv.Itoa(userId), "", exprireTime)
+				r.Rdb.Set(r.Ctx, listName+strconv.Itoa(userId), "", exprireTime)
 			default:
 				//fmt.Println("拥挤中")
 				continue
@@ -134,7 +134,7 @@ func TestSecKill2(t *testing.T) {
 	}()
 	go func() {
 		for _, userId := range userIds {
-			exists, _ := r.rdb.Exists(r.ctx, listName+":"+strconv.Itoa(userId)).Result()
+			exists, _ := r.Rdb.Exists(r.Ctx, listName+":"+strconv.Itoa(userId)).Result()
 			if exists > 0 {
 				//time.Sleep(200 * time.Millisecond)
 				fmt.Println("请求频繁")
@@ -142,7 +142,7 @@ func TestSecKill2(t *testing.T) {
 			}
 			select {
 			case ch <- userId:
-				r.rdb.Set(r.ctx, listName+strconv.Itoa(userId), "", exprireTime)
+				r.Rdb.Set(r.Ctx, listName+strconv.Itoa(userId), "", exprireTime)
 			default:
 				//fmt.Println("拥挤中")
 				continue
@@ -151,7 +151,7 @@ func TestSecKill2(t *testing.T) {
 	}()
 	go func() {
 		for _, userId := range userIds {
-			exists, _ := r.rdb.Exists(r.ctx, listName+":"+strconv.Itoa(userId)).Result()
+			exists, _ := r.Rdb.Exists(r.Ctx, listName+":"+strconv.Itoa(userId)).Result()
 			if exists > 0 {
 				//time.Sleep(200 * time.Millisecond)
 				fmt.Println("请求频繁")
@@ -159,7 +159,7 @@ func TestSecKill2(t *testing.T) {
 			}
 			select {
 			case ch <- userId:
-				r.rdb.Set(r.ctx, listName+strconv.Itoa(userId), "", exprireTime)
+				r.Rdb.Set(r.Ctx, listName+strconv.Itoa(userId), "", exprireTime)
 			default:
 				//fmt.Println("拥挤中")
 				continue
@@ -174,7 +174,8 @@ func TestDeleteKey(t *testing.T) {
 	r := Redis{}
 	r.Conn()
 	defer r.Close()
-	r.rdb.Del(r.ctx, "uniqueUsers")
-	r.rdb.Del(r.ctx, listName)
-	r.rdb.Del(r.ctx, listName+":"+"stock")
+	r.Rdb.Del(r.Ctx, "uniqueUsers")
+	r.Rdb.Del(r.Ctx, listName)
+	r.Rdb.Del(r.Ctx, "users")
+	r.Rdb.Del(r.Ctx, listName+":"+"stock")
 }

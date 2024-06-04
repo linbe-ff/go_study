@@ -70,6 +70,9 @@ func (d *PageInfoDao) Search(ctx context.Context, q structure.QueryPageInfoParam
 	if q.Href != "" {
 		db = db.Where("href like ?", "%"+q.Href+"%")
 	}
+	if q.Page > 0 {
+		db = db.Where("page = ?", q.Page)
+	}
 	if q.Size > 0 {
 		db = db.Limit(q.Size).Offset(q.GetOffSet())
 	}

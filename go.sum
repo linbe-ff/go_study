@@ -2,6 +2,8 @@ github.com/PuerkitoBio/goquery v1.9.1 h1:mTL6XjbJTZdpfL+Gwl5U2h1l9yEkJjhmlTeV9VP
 github.com/PuerkitoBio/goquery v1.9.1/go.mod h1:cW1n6TmIMDoORQU5IU/P1T3tGFunOeXEpGP2WHRwkbY=
 github.com/WooRho/rhtool v0.1.6 h1:j+ApY+K9rAxspFZOlE+fTfRQzy903bKvVBjgadIC+Zs=
 github.com/WooRho/rhtool v0.1.6/go.mod h1:TDgULoShtNmRc6HOltFKzc7/2Z8SqgI8m4zwTtSttVE=
+github.com/WooRho/rhtool v0.1.7 h1:BB/TmKf4MIC9orxG+rR6WortUr/vZMHPykCsLqrGJYU=
+github.com/WooRho/rhtool v0.1.7/go.mod h1:TDgULoShtNmRc6HOltFKzc7/2Z8SqgI8m4zwTtSttVE=
 github.com/andybalholm/cascadia v1.3.2 h1:3Xi6Dw5lHF15JtdcmAHD3i1+T8plmv7BQ/nsViSLyss=
 github.com/andybalholm/cascadia v1.3.2/go.mod h1:7gtRlve5FxPPgIgX36uWBX58OdBsSS6lUvCFb+h7KvU=
 github.com/antchfx/htmlquery v1.3.0 h1:5I5yNFOVI+egyia5F2s/5Do2nFWxJz41Tr3DyfKD25E=

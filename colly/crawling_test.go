@@ -138,3 +138,21 @@ func printI(i int) {
 	time.Sleep(time.Second)
 	print(i)
 }
+
+func TestConnect(t *testing.T) {
+	//m := make(map[string]interface{})
+	//list := []interface{}{m}
+	//
+	db, err := Connect()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var results []map[string]interface{}
+
+	err = db.Table("table").Where("id = ?", 0).Find(&results).Error
+	if err != nil {
+		log.Println(err)
+	}
+
+}

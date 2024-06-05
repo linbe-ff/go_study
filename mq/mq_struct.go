@@ -10,7 +10,7 @@ const (
 	USER     = "guest"
 	PASSWORD = "guest"
 	HOST     = "127.0.0.1"
-	PORT     = "5674"
+	PORT     = "5672"
 )
 
 type (

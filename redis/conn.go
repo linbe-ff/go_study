@@ -17,29 +17,29 @@ const (
 )
 
 type Redis struct {
-	rdb      *redis.Client
-	ctx      context.Context
+	Rdb      *redis.Client
+	Ctx      context.Context
 	TmpValue interface{}
 }
 
 func (r *Redis) Conn() {
-	r.rdb = redis.NewClient(&redis.Options{
+	r.Rdb = redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379", // Redis服务器地址
 		Password: "",               // 密码，没有则留空
 		DB:       2,                // 使用默认DB
 	})
-	r.ctx = context.TODO()
+	r.Ctx = context.TODO()
 }
 
 func (r *Redis) Close() {
-	r.rdb.Close()
+	r.Rdb.Close()
 }
 
 func (r *Redis) ZAdd(score float64, member string) error {
 	if r.IsNil() {
 		return errors.New("redis is nil")
 	}
-	add := r.rdb.ZAdd(r.ctx, "ranking", &redis.Z{Score: score, Member: member})
+	add := r.Rdb.ZAdd(r.Ctx, "ranking", &redis.Z{Score: score, Member: member})
 	_, err := add.Result()
 	if err != nil {
 		return err
@@ -51,7 +51,7 @@ func (r *Redis) ZDel(playerName string) error {
 	if r.IsNil() {
 		return errors.New("redis is nil")
 	}
-	_, err := r.rdb.ZRem(r.ctx, "ranking", playerName).Result()
+	_, err := r.Rdb.ZRem(r.Ctx, "ranking", playerName).Result()
 	if err != nil {
 		return err
 	}
@@ -59,12 +59,12 @@ func (r *Redis) ZDel(playerName string) error {
 }
 
 func (r *Redis) IsNil() bool {
-	return r.rdb == nil
+	return r.Rdb == nil
 }
 
 func (r *Redis) IncrementCount(rkey, rtype string) error {
 	var err error
-	r.TmpValue, err = r.rdb.IncrBy(r.ctx, rkey+rtype, 1).Result()
+	r.TmpValue, err = r.Rdb.IncrBy(r.Ctx, rkey+rtype, 1).Result()
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func (r *Redis) IncrementCount(rkey, rtype string) error {
 }
 
 func (r *Redis) DecrementCount(rkey, rtype string) error {
-	_, err := r.rdb.DecrBy(r.ctx, rkey+rtype, 1).Result()
+	_, err := r.Rdb.DecrBy(r.Ctx, rkey+rtype, 1).Result()
 	if err != nil {
 		return err
 	}
@@ -81,7 +81,7 @@ func (r *Redis) DecrementCount(rkey, rtype string) error {
 
 func (r *Redis) GetCount(rkey, rtype string) (int64, error) {
 	// 使用GET命令获取指定键的值
-	value, err := r.rdb.Get(r.ctx, rkey+rtype).Result()
+	value, err := r.Rdb.Get(r.Ctx, rkey+rtype).Result()
 	if err != nil && err != redis.Nil {
 		return 0, err
 	}
@@ -104,7 +104,7 @@ func (r *Redis) Del(key string) error {
 	if r.IsNil() {
 		return errors.New("redis is nil")
 	}
-	_, err := r.rdb.Del(r.ctx, key).Result()
+	_, err := r.Rdb.Del(r.Ctx, key).Result()
 	if err != nil {
 		return err
 	}
@@ -117,7 +117,7 @@ func (r *Redis) AcquireLock(lockKey string, total int, expireTime time.Duration)
 	//val, err := r.rdb.Get(r.ctx, lockKey).Result()
 
 	// 使用SETNX命令尝试设置键值对，如果键不存在
-	result, err := r.rdb.SetNX(r.ctx, lockKey, total, expireTime).Result()
+	result, err := r.Rdb.SetNX(r.Ctx, lockKey, total, expireTime).Result()
 	if err != nil {
 		return errors.New("Failed to acquire lock： " + err.Error())
 	}
@@ -139,7 +139,7 @@ func (r *Redis) ReleaseLock(lockKey string, lockValue interface{}) error {
 		end;
 `
 	// 使用Lua脚本释放锁
-	_, err := r.rdb.Eval(context.Background(), luaScript, []string{lockKey}, lockValue).Result()
+	_, err := r.Rdb.Eval(context.Background(), luaScript, []string{lockKey}, lockValue).Result()
 	if err != nil {
 		fmt.Println(err.Error())
 		return errors.New("release lock failed ... ")
@@ -162,9 +162,9 @@ func (r *Redis) CreateQueue() {
 		defer wg.Done()
 		lock.Lock()
 		defer lock.Unlock()
-		lLen, _ := r.rdb.LLen(r.ctx, listName).Result()
+		lLen, _ := r.Rdb.LLen(r.Ctx, listName).Result()
 		if lLen < total {
-			r.rdb.RPush(r.ctx, listName, fmt.Sprintf("%d@%v", id, time.Now()))
+			r.Rdb.RPush(r.Ctx, listName, fmt.Sprintf("%d@%v", id, time.Now()))
 			fmt.Println(id, "抢购成功")
 		} else {
 			fmt.Println("抢购活动已结束")

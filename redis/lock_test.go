@@ -73,15 +73,15 @@ func TestAddOneSetNX(t *testing.T) {
 		r.Close()
 	}()
 
-	_, err := r.rdb.Get(r.ctx, lockKey).Result()
+	_, err := r.Rdb.Get(r.Ctx, lockKey).Result()
 	if err == redis.Nil {
-		_, err = r.rdb.Set(r.ctx, lockKey, lockVal, timeout).Result()
+		_, err = r.Rdb.Set(r.Ctx, lockKey, lockVal, timeout).Result()
 		if err != nil {
 			fmt.Println(err.Error())
 			return
 		}
 	}
-	incVal, err = r.rdb.Incr(r.ctx, lockKey).Result()
+	incVal, err = r.Rdb.Incr(r.Ctx, lockKey).Result()
 	if err != nil {
 		fmt.Println(err.Error())
 		return

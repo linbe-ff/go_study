@@ -1,6 +1,7 @@
 package for_same_pointer
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -24,4 +25,21 @@ func TestExpCap(t *testing.T) {
 
 	// 扩容后打印容量和长度
 	fmt.Printf("Capacity: , Length: %d\n", len(m))
+}
+
+func TestPrintChan(t *testing.T) {
+	c1 := make(chan int, 1)
+	c1 <- 1
+	defer close(c1)
+	fmt.Println(<-c1)
+}
+
+func TestCtx(t *testing.T) {
+	ctx := context.Background()
+	ctx = GetContext()
+	fmt.Println(ctx)
+}
+
+func GetContext() (ctx context.Context) {
+	return context.WithValue(context.Background(), "common.DB_HASH", "db_hash")
 }

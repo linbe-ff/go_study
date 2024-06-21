@@ -42,7 +42,7 @@
     另一部分是在有写操作时，才会被初始化的 dirty map。
 
     sync.Map底层使用了两个原生map，一个叫read，仅用于读；一个叫dirty，用于在特定情况下存储最新写入的key-value数据：
-![img.png](img.png)
+![img.png](pic/img.png)
 
     另外有 misses 字段来统计 read 被穿透的次数（被穿透指需要读 dirty 的情况），
     超过一定次数则将 dirty 数据更新到 read 中（触发条件：misses=len(dirty)）

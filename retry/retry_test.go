@@ -3,6 +3,8 @@ package retry
 import (
 	"errors"
 	"fmt"
+	"github.com/cenkalti/backoff"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -19,5 +21,22 @@ func TestRetry(t *testing.T) {
 
 	if err != nil {
 		fmt.Printf(err.Error())
+	}
+}
+
+func TestRetry2(t *testing.T) {
+	b := backoff.NewExponentialBackOff()
+	bf := backoff.WithMaxRetries(b, 2)
+	retryCount := 0
+	for i := 0; i < 3; i++ {
+		retryCount = 0
+		backoff.Retry(func() error {
+			err := errors.New("我是错误" + strconv.Itoa(i))
+			if err != nil {
+				retryCount++
+				fmt.Println(err.Error(), retryCount)
+			}
+			return err
+		}, bf)
 	}
 }

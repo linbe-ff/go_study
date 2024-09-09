@@ -5,6 +5,9 @@ clear 清空命令台
 
 systemctl enable docker // 开机自启动
 
+systemctl stop docker
+systemctl start docker
+
 docker images 查看镜像
 
 sudo docker run -d -p 3306:3306 --name mariadb -e MYSQL_ROOT_PASSWORD=a1234 mariadb

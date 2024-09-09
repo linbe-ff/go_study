@@ -2,26 +2,29 @@ package test
 
 import (
 	"fmt"
+	"sync"
 	"testing"
-	"time"
 )
 
 func TestChan(t *testing.T) {
 	var (
 		chani = make(chan int, 1)
 		chana = make(chan int, 1)
+		wg    = &sync.WaitGroup{}
 	)
 	defer func() {
 		close(chani)
 		close(chana)
 	}()
 	chana <- 0
+	wg.Add(2)
 	go func() {
 		for i := 0; i < 26; i++ {
 			<-chana
 			fmt.Println(i + 1)
 			chani <- i
 		}
+		defer wg.Done()
 	}()
 	go func() {
 		a := 'A'
@@ -31,8 +34,10 @@ func TestChan(t *testing.T) {
 			a++
 			chana <- i
 		}
+		defer wg.Done()
 	}()
-	time.Sleep(time.Second)
+	wg.Wait()
+	//time.Sleep(time.Second)
 }
 
 func TestChan2(t *testing.T) {

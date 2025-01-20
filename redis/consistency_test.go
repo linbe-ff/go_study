@@ -1,10 +1,9 @@
-package consistency
+package redis
 
 import (
 	"encoding/json"
 	"fmt"
 	"go_study/mysql"
-	loc_redis "go_study/redis"
 	"strconv"
 	"sync"
 	"testing"
@@ -25,7 +24,7 @@ type UsersInfo struct {
 }
 
 func TestCh(t *testing.T) {
-	r := loc_redis.Redis{}
+	r := Redis{}
 	wg := &sync.WaitGroup{}
 	r.Conn()
 	defer r.Close()
@@ -90,7 +89,7 @@ func TestMysqlLimit(t *testing.T) {
 
 func TestRedisLimit(t *testing.T) {
 	begin := time.Now()
-	r := loc_redis.Redis{}
+	r := Redis{}
 	r.Conn()
 	defer r.Close()
 

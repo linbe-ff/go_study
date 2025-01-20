@@ -10,9 +10,26 @@
 # excel
     写了一个Excel导入导出的示例
 
+# go-zero-log
+    go-zero-log的使用记录
+
 # redis
     couter: 记录喜欢 点赞 收藏次数
     lock: 分布式锁
     rank: 排行榜
     seckill：秒杀
+
+# mq
+    rabbitMQ使用记录
+
+# reflect 
+    反射赋值索引
+
+# retry
+    重试
+
+# task
+    定时任务
+
+# 
 

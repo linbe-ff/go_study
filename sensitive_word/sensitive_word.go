@@ -1,7 +1,7 @@
 package sensitive_word
 
 import (
-	"fmt"
+	"errors"
 )
 
 // TrieNode 定义 DFA 的节点
@@ -73,12 +73,12 @@ func (d *DFA) Check(text string) error {
 		start := i
 		matched := false
 		for j := i; j < len(result); j++ {
-			char := rune(result[j])
+			char := result[j]
 			if nextNode, exists := node.Children[char]; exists {
 				node = nextNode
 				if node.IsEnd {
 					matched = true
-					return fmt.Errorf("包含敏感词: %s", text[start:j+1])
+					return errors.New("包含敏感词: " + string(result[start:j+1]))
 				}
 			} else {
 				break

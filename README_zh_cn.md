@@ -1,5 +1,5 @@
 # go-study
-[English](https://github.com/linbe-ff/go_study/blob/main/README.md.md) | 简体中文
+[English](https://github.com/linbe-ff/go_study/blob/main/README.md) | 简体中文
 
 ## api_optimal_record 
     接口优化记录

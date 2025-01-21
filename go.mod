@@ -1,6 +1,6 @@
 module go_study
 
-go 1.21
+go 1.23
 
 require (
 	github.com/WooRho/rhtool v0.1.7

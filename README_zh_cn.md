@@ -1,39 +1,42 @@
-# api_optimal_record 
+# go-study
+[English](https://github.com/linbe-ff/go_study/README.md) | 简体中文
+
+## api_optimal_record 
     接口优化记录
 
-# colly
+## colly
     一个爬虫库，借助实现爬取
-##  实际使用
+###  实际使用
     在本次项目中，使用了Excel导入导出、并将爬到的数据写进数据库、分批插入
     有些网站需要代理才能爬取
 
-# excel
+## excel
     写了一个Excel导入导出的示例
 
-# go-zero-log
+## go-zero-log
     go-zero-log的使用记录
 
-# redis
+## redis
     couter: 记录喜欢 点赞 收藏次数
     lock: 分布式锁
     rank: 排行榜
     seckill：秒杀
 
-# mq
+## mq
     rabbitMQ使用记录
 
-# reflect 
+## reflect 
     反射赋值索引
 
-# retry
+## retry
     重试
 
-# task
+## task
     定时任务
 
-# sensitive-word
+## sensitive-word
     敏感词检测
-## 性能
+### 性能
 ```
 1、当字符串为：今夜总会想起你夜总最淫官员，并且用strings.Repeat重复10000次的性能如下
     text      = strings.Repeat("今夜总会想起你夜总", 10000) + "最淫官员"
@@ -59,7 +62,7 @@
 结论 
     使用DFA算法性能更好，特别是在成文本匹配中速度遥遥领先。
 ```
-## 包含功能
+### 包含功能
 ```
 新增敏感词：func (d *DFA) AddWord(word string)
 更新敏感词：func (d *DFA) UpdateOldWord(oldWord, newWord string)
